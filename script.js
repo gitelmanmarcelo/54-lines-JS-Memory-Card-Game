@@ -1,30 +1,27 @@
 const handleClick = (e) => {
-    if (cards[e.currentTarget.id] === 0)  // clicks on already opened card
-        return;
     e.target.querySelector('img').classList.remove('hidden');
-    switch (state) {
-        case BEGIN:
+    switch (opened.length) {
+        case 0:  // game starts
             opened = [e];
-            state = OPEN_SECOND;
             return;    
-        case NOT_PAIR:
-            opened[0].target.querySelector('img').classList.add('hidden');
-            opened[1].target.querySelector('img').classList.add('hidden');
-            opened = [e];
-            state = OPEN_SECOND;
-            return;    
-        case FOUND_PAIR:
-            opened = [e];
-            state = OPEN_SECOND;
-            return;    
-        case OPEN_SECOND:
+        case 2:
+            if (opened[0].target.querySelector('img').src === opened[1].target.querySelector('img').src) {
+                opened = [e];
+            } else {
+                    opened[0].target.querySelector('img').classList.add('hidden');
+                    opened[1].target.querySelector('img').classList.add('hidden');
+                    opened = [e];
+            }
+            return;            
+        case 1:
             opened.push(e);
             if (opened[0].target.querySelector('img').src === opened[1].target.querySelector('img').src) {
-                state = FOUND_PAIR;
                 cards[opened[0].target.id] = 0;
                 cards[opened[1].target.id] = 0;
                 opened[0].target.classList.add('pair');
                 opened[1].target.classList.add('pair');
+                opened[0].target.removeEventListener('click',handleClick);
+                opened[1].target.removeEventListener('click',handleClick);
                 if (cards.filter(card => card !== 0).length === 0) {
                     alert('Congrats - you won!');
                     document.querySelectorAll('div').forEach(div => {
@@ -32,24 +29,16 @@ const handleClick = (e) => {
                     })
                     startGame();
                 }
-            } else {
-                state = NOT_PAIR;
             }
     }
 }
 
-const BEGIN = 'BEGIN', OPEN_SECOND = 'OPEN_SECOND', NOT_PAIR = 'NOT_PAIR', FOUND_PAIR = 'FOUND_PAIR'
-let cards, opened, state;
-
 const startGame = () => {
 
-    cards = [];
-    opened = [];
-    state = BEGIN;
+    cards = [], opened = [];
 
     for (let i = 1; i<=15; i++) {   // add cards
-        cards.push(i);
-        cards.push(i);
+        cards.push(i,i);
     }
     for (let i = cards.length - 1; i > 0; i--) {   // shuffle cards
         let j = Math.floor(Math.random() * (i + 1));
