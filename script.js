@@ -5,13 +5,11 @@ const handleClick = (e) => {
             opened = [e];
             return;    
         case 2:
-            if (opened[0].target.querySelector('img').src === opened[1].target.querySelector('img').src) {
-                opened = [e];
-            } else {
+            if (opened[0].target.querySelector('img').src !== opened[1].target.querySelector('img').src) {
                     opened[0].target.querySelector('img').classList.add('hidden');
                     opened[1].target.querySelector('img').classList.add('hidden');
-                    opened = [e];
             }
+            opened = [e];
             return;            
         case 1:
             opened.push(e);
@@ -35,11 +33,8 @@ const handleClick = (e) => {
 
 const startGame = () => {
 
-    cards = [], opened = [];
+    cards = [1,1,2,2,3,3,4,4,5,5,6,6,7,7,8,8,9,9,10,10,11,11,12,12,13,13,14,14,15,15], opened = [];
 
-    for (let i = 1; i<=15; i++) {   // add cards
-        cards.push(i,i);
-    }
     for (let i = cards.length - 1; i > 0; i--) {   // shuffle cards
         let j = Math.floor(Math.random() * (i + 1));
         [cards[i], cards[j]] = [cards[j], cards[i]];

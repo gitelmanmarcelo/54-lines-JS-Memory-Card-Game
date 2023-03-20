@@ -1,5 +1,5 @@
-# 59-lines-JS-Memory-Card-Game
+# 54-lines-JS-Memory-Card-Game
 
-A memory card game in 59 lines of JavaScript
+A memory card game in 54 lines of JavaScript
 
-play at: https://gitelmanmarcelo.github.io/59-lines-JS-Memory-Card-Game/
+play at: https://gitelmanmarcelo.github.io/54-lines-JS-Memory-Card-Game/
